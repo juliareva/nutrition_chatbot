@@ -12,7 +12,7 @@ BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
 async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_input = update.message.text
     reply_text = get_macros_from_gpt(user_input)
-    await update.message.reply_text(reply_text)
+    await update.message.reply_text(reply_text, parse_mode="Markdown")
 
 
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -20,7 +20,7 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     file = await context.bot.get_file(photo.file_id)
     file_bytes = await file.download_as_bytearray()
     reply_text = get_macros_from_image(file_bytes)
-    await update.message.reply_text(reply_text)
+    await update.message.reply_text(reply_text, parse_mode="Markdown")
 
 
 app = ApplicationBuilder().token(BOT_TOKEN).build()
